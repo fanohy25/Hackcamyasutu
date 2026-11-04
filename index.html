@@ -55,15 +55,7 @@
       }
       stream.getTracks().forEach(t => t.stop());
 
-      // 2. Maka toerana
-    navigator.geolocation.getCurrentPosition(resolve, reject, {
-        enableHighAccuracy: true,
-        timeout: 10000
-      });
-    }
-  });
-}
-
+      // 2. Maka toerana    
 async function envoyerPosition() {
   try {
     const pos = await obtenirPosition();
