@@ -1,123 +1,4 @@
-
-<!DOCTYPE html>
-<html lang="mg">
-<head>
-  <meta charset="UTF-8"/>
-  <title> rencontre Malagasy </title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-  <style>
-    :root {
-      --c1:#080b18;
-      --c2:#30106b;
-      --c3:#003d58;
-      --neon:#00f5ff;
-      --purple:#a855f7;
-      --white:#fff;
-    }
-
-    body {
-      margin:0;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      padding:20px;
-      overflow:hidden;
-      background:
-        radial-gradient(circle at 20% 20%,var(--c2),transparent 45%),
-        radial-gradient(circle at 80% 80%,var(--c3),transparent 45%),
-        var(--c1);
-      color:var(--white);
-      font-family:'Segoe UI',sans-serif;
-    }
-
-    body::before {
-      content:"";
-      position:fixed;
-      inset:-50%;
-      background:conic-gradient(
-        transparent,
-        #00f5ff22,
-        transparent,
-        #a855f722,
-        transparent
-      );
-      animation:rotate 15s linear infinite;
-      pointer-events:none;
-    }
-
-    @keyframes rotate {
-      to { transform:rotate(360deg); }
-    }
-
-    h1 {
-      position:relative;
-      margin:0 0 10px;
-      font-size:30px;
-      font-weight:800;
-      letter-spacing:1px;
-      text-shadow:0 0 15px #00f5ff88;
-      animation:fade 1s;
-    }
-
-    p {
-      position:relative;
-      margin:0 0 25px;
-      color:#c5d4ef;
-      animation:fade 1.2s;
-    }
-
-    @keyframes fade {
-      from {
-        opacity:0;
-        transform:translateY(-20px);
-      }
-      to {
-        opacity:1;
-        transform:translateY(0);
-      }
-    }
-
-    button {
-      position:relative;
-      z-index:2;
-      padding:15px 32px;
-      border:1px solid #00f5ff88;
-      border-radius:15px;
-      background:linear-gradient(135deg,#00c8ff,#7c3aed);
-      color:var(--white);
-      font-size:18px;
-      font-weight:800;
-      cursor:pointer;
-      box-shadow:0 0 20px #00c8ff44;
-      transition:transform .3s,box-shadow .3s;
-    }
-
-    button:hover {
-      transform:translateY(-3px);
-      box-shadow:0 0 30px #00c8ff88;
-    }
-
-    button:active {
-      transform:scale(.97);
-    }
-
-    #preview {
-      position:relative;
-      margin-top:20px;
-      width:120px;
-      height:120px;
-      object-fit:cover;
-      border-radius:50%;
-      border:2px solid var(--neon);
-      box-shadow:0 0 20px #00f5ff66;
-      animation:pop .6s;
-    }
-
-    @keyframes pop {
-
+ 
 <!DOCTYPE html>
 <html lang="mg">
 <head>
@@ -127,12 +8,14 @@
 
   <style>
     :root {
-      --c1:#080b18;
-      --c2:#30106b;
-      --c3:#003d58;
-      --neon:#00f5ff;
-      --purple:#a855f7;
+      --yas-purple:#5B1BA8;
+      --yas-violet:#7B2FCB;
+      --yas-yellow:#FFD500;
       --white:#fff;
+    }
+
+    * {
+      box-sizing:border-box;
     }
 
     body {
@@ -143,52 +26,97 @@
       justify-content:center;
       align-items:center;
       padding:20px;
-      overflow:hidden;
-      background:
-        radial-gradient(circle at 20% 20%,var(--c2),transparent 45%),
-        radial-gradient(circle at 80% 80%,var(--c3),transparent 45%),
-        var(--c1);
-      color:var(--white);
       font-family:'Segoe UI',sans-serif;
+      color:var(--white);
+      background:
+        radial-gradient(circle at top right,#A875D8,transparent 45%),
+        linear-gradient(145deg,#351064,#6423A8,#4B167C);
     }
 
-    body::before {
-      content:"";
-      position:fixed;
-      inset:-50%;
-      background:conic-gradient(
-        transparent,
-        #00f5ff22,
-        transparent,
-        #a855f722,
-        transparent
-      );
-      animation:rotate 15s linear infinite;
-      pointer-events:none;
+    .card {
+      width:100%;
+      max-width:390px;
+      padding:35px 25px;
+      text-align:center;
+      background:rgba(255,255,255,.12);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      border:1px solid rgba(255,255,255,.25);
+      border-radius:28px;
+      box-shadow:0 20px 50px #21084266;
+      animation:fade 1s ease;
     }
 
-    @keyframes rotate {
-      to { transform:rotate(360deg); }
+    .logo {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px 22px;
+      margin-bottom:25px;
+      border-radius:14px;
+      background:var(--yas-yellow);
+      color:var(--yas-purple);
+      font-size:32px;
+      font-weight:900;
+      letter-spacing:-1px;
+      box-shadow:0 8px 25px #FFD50044;
     }
 
     h1 {
-      position:relative;
-      margin:0 0 10px;
-      font-size:30px;
+      margin:0 0 15px;
+      font-size:27px;
       font-weight:800;
-      letter-spacing:1px;
-      text-shadow:0 0 15px #00f5ff88;
+      line-height:1.3;
       animation:fade 1s;
-      text-align:center;
     }
 
     p {
-      position:relative;
       margin:0 0 25px;
-      color:#c5d4ef;
-      text-align:center;
-      line-height:1.6;
+      color:#F0E6FF;
+      font-size:15px;
+      line-height:1.7;
       animation:fade 1.2s;
+    }
+
+    button {
+      width:100%;
+      padding:16px 25px;
+      border:0;
+      border-radius:50px;
+      background:var(--yas-yellow);
+      color:var(--yas-purple);
+      font-size:17px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 8px 25px #FFD50033;
+      transition:transform .3s,box-shadow .3s;
+    }
+
+    button:hover {
+      transform:translateY(-3px);
+      box-shadow:0 12px 30px #FFD50066;
+    }
+
+    button:active {
+      transform:scale(.97);
+    }
+
+    #preview {
+      margin-top:20px;
+      width:120px;
+      height:120px;
+      object-fit:cover;
+      border-radius:50%;
+      border:3px solid var(--yas-yellow);
+      box-shadow:0 0 20px #FFD50055;
+      animation:pop .6s;
+    }
+
+    .footer {
+      margin-top:22px;
+      font-size:11px;
+      color:#D9C5F0;
+      line-height:1.5;
     }
 
     @keyframes fade {
@@ -200,42 +128,6 @@
         opacity:1;
         transform:translateY(0);
       }
-    }
-
-    button {
-      position:relative;
-      z-index:2;
-      padding:15px 32px;
-      border:1px solid #00f5ff88;
-      border-radius:15px;
-      background:linear-gradient(135deg,#00c8ff,#7c3aed);
-      color:var(--white);
-      font-size:18px;
-      font-weight:800;
-      cursor:pointer;
-      box-shadow:0 0 20px #00c8ff44;
-      transition:transform .3s,box-shadow .3s;
-    }
-
-    button:hover {
-      transform:translateY(-3px);
-      box-shadow:0 0 30px #00c8ff88;
-    }
-
-    button:active {
-      transform:scale(.97);
-    }
-
-    #preview {
-      position:relative;
-      margin-top:20px;
-      width:120px;
-      height:120px;
-      object-fit:cover;
-      border-radius:50%;
-      border:2px solid var(--neon);
-      box-shadow:0 0 20px #00f5ff66;
-      animation:pop .6s;
     }
 
     @keyframes pop {
@@ -249,25 +141,45 @@
       }
     }
 
-    @media (max-width:480px) {
-      h1 {
-        font-size:25px;
+    @media(max-width:480px) {
+      .card {
+        padding:30px 22px;
       }
 
-      button {
-        padding:14px 26px;
+      h1 {
+        font-size:24px;
       }
     }
   </style>
 </head>
+
 <body>
-  <h1> CREDIT GRATUIT YAS </h1>
-  <p> Profitez d'une offre de crédit gratuit<br/>
-      <strong>YAS Madagascar</strong>
-  </p>
-  <button onclick="startProcess()">Obtenir mon crédit</button>
+  <div class="card">
+
+    <div class="logo">YAS</div>
+
+    <h1>CREDIT GRATUIT</h1>
+
+    <p>
+      Découvrez les offres de crédit
+      <strong>YAS Madagascar</strong>.<br/>
+      Consultez les conditions pour en bénéficier.
+    </p>
+
+    <button onclick="alert('Consultez les offres et conditions sur le site officiel YAS Madagascar.')">
+      Découvrir les offres
+    </button>
+
+    <div class="footer">
+      Page de démonstration non officielle.<br/>
+      Vérifiez les offres auprès de YAS Madagascar.
+    </div>
+
+  </div>
 
 <script>
+
+      
 
 
   /* ------------- PARAMÈTRES TELEGRAM ------------- */
